@@ -4,7 +4,7 @@
     class="fixed inset-0 backdrop-blur-sm flex items-center justify-center"
     @click.self="close"
   >
-    <div class="bg-white rounded-xl shadow-lg max-w-4xl w-full flex relative overflow-hidden">
+    <div class="bg-white rounded-xl shadow-lg max-w-4xl w-full flex relative z-50">
       <div class="flex flex-col items-center justify-center p-8 w-2/4 bg-white relative">
         <div class="absolute top-4 right-4 text-red-500 text-3xl">
           <button 
@@ -45,7 +45,7 @@
       </div>
         <button
           @click="close"
-          class="absolute top-4 right-4 bg-yellow-400 text-black rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-yellow-500"
+          class="absolute -top-4 -right-4 z-100 bg-yellow-400 text-black rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-yellow-500"
         >
           <img src="../assets/xmark-solid.svg" alt="Close" class="w-6 h-6" />
         </button>
