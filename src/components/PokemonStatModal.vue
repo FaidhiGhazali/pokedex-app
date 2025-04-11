@@ -11,14 +11,10 @@
             @click.stop="$emit('toggle-favorite', pokemon.name)" 
             class="absolute top-2 right-2"
             >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="currentColor" 
+            <HeartIcon 
               class="w-6 h-6"
-              :style="{ color: isFavorite ? '#EF4444' : '#6B7280' }">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
+              :class="isFavorite ? 'text-red-500' : 'text-gray-500'" 
+            />
           </button>
         </div>
 
@@ -34,15 +30,15 @@
         </div>
       </div>
 
-      <div class="w-3/4 bg-gray-100 p-8">
+      <div class="w-3/4 bg-gray-200 p-8">
         <h3 class="text-2xl font-bold mb-4 text-gray-900">Stats</h3>
         <div
           v-for="(stat, key, index) in stats"
           :key="key"
         >
           <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 gap-1 font-medium">
-            <div class="col-span-2 mb-2" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-200' ]">{{ stat.label }}</div>
-            <div class="text-right mb-2" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-200' ]">{{ pokemon[key] }}</div>
+            <div class="col-span-2 mb-2" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-100' ]">{{ stat.label }}</div>
+            <div class="text-right mb-2" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-100' ]">{{ pokemon[key] }}</div>
           </div>
         </div>
       </div>
@@ -58,6 +54,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import HeartIcon from '../assets/heart-solid.svg'
 
 const props = defineProps({
   show: Boolean,
@@ -88,5 +85,8 @@ const close = () => emit('close');
 <style scoped>
 .capitalize {
   text-transform: capitalize;
+}
+svg {
+  fill: currentColor;
 }
 </style>

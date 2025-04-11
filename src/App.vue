@@ -1,9 +1,13 @@
 <template>
   <div class="min-h-screen p-6" style="background-color: #FDE68A;">
     <div class="mb-6">
-      <h5 class="text-lg font-bold capitalize">Pokedex</h5>
+      <p class="text-6xl font-bold capitalize">Pokédex</p>
     </div>
-
+    
+    <div class="mb-6">
+      <p class="text-xl font-bold">Search for a Pokémon by name or id number</p>
+    </div>
+    
     <div class="mb-6 flex items-center">
       <SearchBar
         v-model="searchQuery"
@@ -143,3 +147,11 @@ onMounted(() => {
   fetchPokemon();
 });
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+</style>
