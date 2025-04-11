@@ -83,6 +83,7 @@ const searchPokemon = async () => {
         id: data.id.toString().padStart(4, "0"),
         name: data.name,
         image: data.sprites.other["official-artwork"].front_default,
+        url: `https://pokeapi.co/api/v2/pokemon/${data.id}`
       };
       hasSearched.value = true;
     } catch (error) {
