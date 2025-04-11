@@ -39,6 +39,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import SearchBar from './components/SearchBar.vue';
 import PokemonGrid from './components/PokemonGrid.vue';
 import PokemonModal from './components/PokemonStatModal.vue';
@@ -105,9 +106,9 @@ const filteredPokemonList = computed(() => {
   return searchResult.value ? [searchResult.value] : pokemonList.value;
 });
 
-const loadMore = () => {
-  fetchPokemon(); 
-};
+const loadMore = debounce(() => {
+  fetchPokemon();
+}, 300);
 
 const toggleFavorite = (name) => {
   if (favorites.value.includes(name)) {

@@ -7,6 +7,7 @@
         :src="pokemon.image" 
         alt="Pokemon image" 
         class="w-50 h-50 mx-auto mb-2" 
+        loading="lazy"
       />
       <h2 class="text-lg font-bold capitalize">{{ pokemon.name }}</h2>
       <h3 class="text-sm text-gray-500">{{ pokemon.id }}</h3>

@@ -1,8 +1,5 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 
-/* Add Lato as a utility */
 @layer utilities {
   .font-lato {
     font-family: 'Lato', sans-serif;

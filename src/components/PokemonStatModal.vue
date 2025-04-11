@@ -22,6 +22,7 @@
           :src="pokemon.image"
           :alt="pokemon.name"
           class="w-52 h-auto"
+          loading="lazy"
         />
 
         <div class="text-center mt-4">
@@ -37,8 +38,8 @@
           :key="key"
         >
           <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 gap-1 font-medium">
-            <div class="col-span-2 mb-2" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-100' ]">{{ stat.label }}</div>
-            <div class="text-right mb-2" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-100' ]">{{ pokemon[key] }}</div>
+            <div class="col-span-2 mb-2 font-bold" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-100' ]">{{ stat.label }}</div>
+            <div class="text-right mb-2 font-bold" :class="['items-center px-4 py-2 rounded-md',index % 2 === 0 ? 'bg-white' : 'bg-gray-100' ]">{{ pokemon[key] }}</div>
           </div>
         </div>
       </div>
