@@ -9,7 +9,7 @@
         @click="$emit('card-click', pokemon)"
       />
   
-      <div class="rounded-lg p-4 text-center flex items-center justify-center">
+      <div v-if="!hasSearched" class="rounded-lg p-4 text-center flex items-center justify-center">
         <button 
           @click="$emit('load-more')" 
           class="px-4 py-2 bg-yellow-400 font-bold rounded hover:bg-yellow-500">
@@ -24,7 +24,8 @@
   
   defineProps({
     list: Array,
-    favorites: Array
+    favorites: Array,
+    hasSearched: Boolean
   });
 
   defineEmits(['toggle-favorite', 'load-more']);

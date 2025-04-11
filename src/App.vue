@@ -20,6 +20,7 @@
     <PokemonGrid 
       :list="filteredPokemonList" 
       :favorites="favorites"
+      :hasSearched="hasSearched"  
       @toggle-favorite="toggleFavorite"
       @load-more="loadMore"
       @card-click="openModal"
