@@ -79,7 +79,7 @@ const fetchPokemon = async () => {
 };
 
 const searchPokemon = async () => {
-  const query = searchQuery.value.trim().toLowerCase();
+  const query = searchQuery.value.trim().toLowerCase().replace(/^0+/, "");
   if (query) {
     try {
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`);
