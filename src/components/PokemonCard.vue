@@ -13,7 +13,7 @@
       <h3 class="text-sm text-gray-500">{{ pokemon.id }}</h3>
   
       <button 
-       @click.stop="$emit('toggle-favorite', pokemon.name)" 
+       @click.stop="emit('toggle-favorite', pokemon.name)" 
         class="absolute top-2 right-2">
         <HeartIcon 
           class="w-6 h-6"
@@ -31,7 +31,7 @@ defineProps({
   isFavorite: Boolean
 });
 
-defineEmits(['toggle-favorite']);
+const emit = defineEmits(['toggle-favorite']);
 </script>
 
 <style>

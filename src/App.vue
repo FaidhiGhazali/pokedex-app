@@ -28,7 +28,9 @@
 
     <PokemonModal 
       :show="isModalOpen" 
-      :pokemon="selectedPokemon" 
+      :pokemon="selectedPokemon"
+      :type="typePokemon"
+      :cries="criesPokemon"
       @close="closeModal"
       :isFavorite="selectedPokemon ? favorites.includes(selectedPokemon.name) : false"
       @toggle-favorite="toggleFavorite"
@@ -39,8 +41,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
 import { debounce } from 'lodash';
+import axios from 'axios';
 import SearchBar from './components/SearchBar.vue';
 import PokemonGrid from './components/PokemonGrid.vue';
 import PokemonModal from './components/PokemonStatModal.vue';
@@ -54,6 +56,8 @@ const searchResult = ref(null);
 const hasSearched = ref(false);
 const selectedPokemon = ref(null);
 const isModalOpen = ref(false);
+const typePokemon = ref([])
+const criesPokemon = ref("")
 
 const fetchPokemon = async () => {
   const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit.value}&offset=${offset.value}`);
@@ -123,8 +127,7 @@ const toggleFavorite = (name) => {
 
 const openModal = async (pokemon) => {
   try {
-    const response = await axios.get(pokemon.url); 
-    selectedPokemon.value = pokemon;
+    const response = await axios.get(pokemon.url);
     selectedPokemon.value = {
       ...pokemon,
       height: response.data.height,
@@ -137,6 +140,8 @@ const openModal = async (pokemon) => {
       speed: response.data.stats[5].base_stat,
     };
     isModalOpen.value = true;
+    typePokemon.value = response.data.types
+    criesPokemon.value = response.data.cries.latest
   } catch (error) {
     console.error('Error fetching Pokémon stats:', error);
   }
