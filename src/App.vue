@@ -20,7 +20,8 @@
     <PokemonGrid 
       :list="filteredPokemonList" 
       :favorites="favorites"
-      :hasSearched="hasSearched"  
+      :hasSearched="hasSearched"
+      :loading="isLoading"
       @toggle-favorite="toggleFavorite"
       @load-more="loadMore"
       @card-click="openModal"
@@ -34,14 +35,27 @@
       @close="closeModal"
       :isFavorite="selectedPokemon ? favorites.includes(selectedPokemon.name) : false"
       @toggle-favorite="toggleFavorite"
+    />
+  </div>
 
-/>
+  <div 
+    v-if="showErrorModal"
+    class="fixed inset-0 backdrop-blur-sm flex items-center justify-center"
+  >
+    <div class="bg-white p-6 rounded shadow-md max-w-sm w-full text-center relative">
+      <p class="text-xl font-semibold text-red-600 mb-4">{{ errorMessage }}</p>
+      <button
+        @click="showErrorModal = false"
+        class="absolute -top-4 -right-4 z-10 bg-yellow-400 text-black rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-yellow-500"
+      >
+        <img src="../src/assets/xmark-solid.svg" alt="Close" class="w-6 h-6" />
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { debounce } from 'lodash';
 import axios from 'axios';
 import SearchBar from './components/SearchBar.vue';
 import PokemonGrid from './components/PokemonGrid.vue';
@@ -54,29 +68,43 @@ const offset = ref(0);
 const searchQuery = ref("");
 const searchResult = ref(null); 
 const hasSearched = ref(false);
+const showErrorModal = ref(false)
+const errorMessage = ref("");
 const selectedPokemon = ref(null);
 const isModalOpen = ref(false);
 const typePokemon = ref([])
 const criesPokemon = ref("")
+const isLoading = ref(false);
 
 const fetchPokemon = async () => {
-  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit.value}&offset=${offset.value}`);
-  const pokemonResults = response.data.results;
-  const detailedPokemonList = await Promise.all(
-    pokemonResults.map(async (pokemon) => {
-      const details = await axios.get(pokemon.url);
-      return {
-        id: details.data.id.toString().padStart(4, "0"),
-        name: pokemon.name,
-        image: details.data.sprites.other["official-artwork"].front_default,
-        url: pokemon.url
-      };
-    })
-  );
-  
-  pokemonList.value = [...pokemonList.value, ...detailedPokemonList];
-  offset.value += limit.value;
+  if (isLoading.value) return;
+  isLoading.value = true;
+
+  try {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit.value}&offset=${offset.value}`);
+    const pokemonResults = response.data.results;
+
+    const detailedPokemonList = await Promise.all(
+      pokemonResults.map(async (pokemon) => {
+        const details = await axios.get(pokemon.url);
+        return {
+          id: details.data.id.toString().padStart(4, "0"),
+          name: pokemon.name,
+          image: details.data.sprites.other["official-artwork"].front_default,
+          url: pokemon.url
+        };
+      })
+    );
+
+    pokemonList.value = [...pokemonList.value, ...detailedPokemonList];
+    offset.value += limit.value;
+  } catch (error) {
+    console.error("Error loading Pokémon:", error);
+  } finally {
+    isLoading.value = false;
+  }
 };
+
 
 const searchPokemon = async () => {
   const query = searchQuery.value.trim().toLowerCase().replace(/^0+/, "");
@@ -94,7 +122,9 @@ const searchPokemon = async () => {
     } catch (error) {
       searchResult.value = null;
       hasSearched.value = false;
-      console.error("Error fetching Pokémon data:", error);
+      showErrorModal.value = true;
+      errorMessage.value = error.response.data;
+      searchQuery.value = ""
     }
   }
 };
@@ -112,9 +142,9 @@ const filteredPokemonList = computed(() => {
   return searchResult.value ? [searchResult.value] : pokemonList.value;
 });
 
-const loadMore = debounce(() => {
+const loadMore = () => {
   fetchPokemon();
-}, 300);
+}
 
 const toggleFavorite = (name) => {
   if (favorites.value.includes(name)) {

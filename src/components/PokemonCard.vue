@@ -1,7 +1,7 @@
 <template>
     <div 
       style="background-color: #FFFFFF"
-      class="relative rounded-lg p-4 text-center shadow-md hover:shadow-lg transition-shadow"
+      class="relative rounded-lg p-4 text-center shadow-md hover:shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
     >
       <img 
         :src="pokemon.image" 

@@ -40,8 +40,8 @@
         </div>
 
         <div class="flex space-x-4 text-center":class="{ 'justify-center': type.length === 1, 'justify-start': type.length > 1 }">
-          <p class="text-center rounded dense opacity-100 px-2 py-1 capitalize":class="`bg-type-${type[0]?.type?.name}`"> {{ type[0]?.type?.name }}</p>
-          <p v-if="type[1]?.type?.name"class="text-center rounded dense opacity-100 px-2 py-1 capitalize" :class="`bg-type-${type[1]?.type?.name}`"> {{ type[1]?.type?.name }} </p>
+          <p class="text-center rounded dense opacity-100 px-2 py-1 capitalize w-30":class="`bg-type-${type[0]?.type?.name}`"> {{ type[0]?.type?.name }}</p>
+          <p v-if="type[1]?.type?.name"class="text-center rounded dense opacity-100 px-2 py-1 capitalize w-30" :class="`bg-type-${type[1]?.type?.name}`"> {{ type[1]?.type?.name }} </p>
         </div>
 
       </div>
